@@ -1,0 +1,73 @@
+\documentclass[11pt]{article}
+\usepackage{amsmath} % AMS Math Package
+\usepackage{polski}
+\usepackage[utf8]{inputenc}
+\usepackage{listings}
+\usepackage{graphicx} % Allows for eps images
+\newcommand{\png}[1]{\begin{center}\includegraphics{#1}\end{center}}
+\newcommand{\largepng}[1]{\begin{center}\includegraphics[width=\linewidth]{#1}\end{center}}
+
+\begin{document}
+\largepng{tabelka.png}
+\section{Zadanie 1}
+
+Dla przejścia elektronu z poziomu
+\[E_{foton} = E_g + E_1n + E_1p\]
+
+Określenie grubości studni
+Określenie przerw energetycznych materiałów
+Wybór materiałów ze wskazaniem ich stałych sieciowych
+Rysunek - schemat struktury
+Wskazanie koloru emitowanego światła
+\section{Zadanie 2}
+
+Dla danych z zestawu 3 współczynnik kształtu $l/S$ wynosi $1.04mm/1.89mm^2 = 0.05502/mm$.
+Dane z pliku można przedstawić na wykresie Arrheniusa tak jak poniżej:
+\largepng{z2.png}
+
+Obliczenie współczynników przeprowadza się przy pomocy następującego skryptu w Pythonie:
+\begin{lstlisting}[language=Python]
+k = 1.38064852e-23
+e = 1.60217662e-19
+data = numpy.loadtxt("zad2_is_3_readable.txt")
+Kelvin = 273.15
+L=grubosc = 1.04e-3
+S=powierzchnia = 18.9e-6
+print(L/S)
+
+T, R = temperatureC, resistanceOhm = data[:,0], data[:,1]
+T+=Kelvin
+G=1/R
+conductivity = G*L/S
+
+def linear_curve(x, a, b):
+    return a*x+b
+x = 1/T
+y = np.log(conductivity*T/S)
+coefficients, covs = scipy.optimize.curve_fit(linear_curve, x, y)
+print(coefficients)
+print(coefficients[0]*k/e)
+\end{lstlisting}
+
+Parametry dopasowania prostej $y=ax+b$ do zbioru danych $(1/T, \log{(\sigma T/S)}$ wynoszą:
+\[a = 7153.0919 K, b = 26.6597\]
+
+Co pozwala nam, mnożąc przez stałą Boltzmanna oraz dzieląc przez ładunek elektronu, otrzymać
+\[ E_a = 0.6164 eV \]
+
+Podstawiając otrzymane wartości ($\sigma_0 = \exp{b}$), otrzymujemy
+
+\[ \sigma(25^{\circ}C) = 0.04834 S/m \]
+% Wyznaczenie współczynnika kształtu próbki (tj. l/S)
+% Wykreślenie danych w żądanych współrzędnych
+% Oznaczenie wykresu (jednostki i opisy osi)
+% Dopasowanie prostej i wyznaczenie parametrów dopasowania
+Obliczenie energii aktywacji
+Obliczenie wartości przewodności w 25 stopni C
+\section{Zadanie 3}
+Przeksztalcenie i otrzymanie układu równań
+Wyznaczenie wyznacznika
+Rozwiązanie równania dwukwadratowego
+Estetyczne wykreślenie otrzymanych funkcji dla pierwszej strefy Brillouina
+\largepng{z3.png}
+\end{document}
