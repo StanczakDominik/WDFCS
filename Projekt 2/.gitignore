@@ -3,3 +3,4 @@
 *.ffb_latexmk
 *.aux
 *.synctex.gz
+*.fdb_latexmk

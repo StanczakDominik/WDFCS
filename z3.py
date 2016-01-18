@@ -1,19 +1,19 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-plt.ion()
-plt.figure(1)
-plt.grid()
-plt.xlabel("2 Theta")
-plt.ylabel("Natezenie, w znormalizowanych arbitralnych jednostkach")
-
-for name in ("zad3_xrd_1.txt", "zad3_xrd_2.txt", "zad3_xrd_3.txt", "zad3_xrd_4.txt", "zad3_xrd_5.txt", "zad3_xrd_6.txt", "zad3_xrd_7.txt"):
-	with open(name) as file:
-		A=np.loadtxt(file)
-	x = A[:,0]
-	y = A[:,1]
-	y = y/max(y)
-	plt.plot(x, y, "-", label=name)
+# plt.ion()
+# plt.figure(1)
+# plt.grid()
+# plt.xlabel("2 Theta")
+# plt.ylabel("Natezenie, w znormalizowanych arbitralnych jednostkach")
+#
+# for name in ("zad3_xrd_1.txt", "zad3_xrd_2.txt", "zad3_xrd_3.txt", "zad3_xrd_4.txt", "zad3_xrd_5.txt", "zad3_xrd_6.txt", "zad3_xrd_7.txt"):
+# 	with open(name) as file:
+# 		A=np.loadtxt(file)
+# 	x = A[:,0]
+# 	y = A[:,1]
+# 	y = y/max(y)
+# 	plt.plot(x, y, "-", label=name)
 
 lambda_w=1.4767e-10
 hkl = (0, 1, 2)
@@ -21,6 +21,7 @@ a = 3.15e-10
 f0=1
 f1=1
 print("h\tk\tl\tn\td\t2T\tF")
+ds = set()
 doubleangles_maxes = []
 Is_maxes = []
 doubleangles_mins = []
@@ -32,6 +33,9 @@ for h in hkl:
 				continue
 			for n in range(1,2):
 				d = a/np.sqrt(h**2+k**2+l**2)
+				if d in ds:
+					continue
+				ds.add(d)
 				sin=n*lambda_w/2./d
 				if(sin>1 or sin<-1):
 					# print("sin {0:.2f}".format(sin))

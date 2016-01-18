@@ -9,7 +9,7 @@ print(Lambda/1e-9) #nm
 #zielony?
 
 # szerokość studni
-d=10e-9
+d=5e-9
 
 c=299792458
 h=6.62607004e-34
